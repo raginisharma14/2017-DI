@@ -1,0 +1,82 @@
+import numpy as np
+from random import randint 
+import statistics
+
+class inc(object):
+    def __init__(self):
+        
+        self.transmat = np.array([[0,0,0,0,0,0,.5,0,0,.5,0,0,0,0,0,0],\
+            [0,0,0,0,0,0,0,1.0/3,1.0/3,0,1.0/3,0,0,0,0,0],\
+            [0, 0, 0, 0, 1.0/3, 0, 0, 0, 0,1.0/3, 0, 1.0/3, 0, 0, 0, 0],\
+            [0, 0, 0, 0,0,0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0], \
+            [0,0,0,1.0/3,0,0,0,0,0,0,1.0/3,0,0,1.0/3,0,0],\
+            [0,0,0,0.25,0.25,0,0,0,0,0,0,0,0.25,0,0.25,0],\
+            [0.25,0,0,0,0,0,0,0,0.25,0,0,0,0,0.25,0,0.25],\
+            [0,1.0/3,0,0,0,0,0,0,0,1.0/3,0,0,0,0,1.0/3,0],\
+            [0,1.0/3,0,0,0,0,1.0/3,0,0,0,0,0,0,0,1.0/3,0],\
+            [0.25,0,0.25,0,0,0,0,0.25,0,0,0,0,0,0,0,0.25],\
+            [0,0.25,0,0.25,0.25,0,0,0,0,0,0,0,0.25,0,0,0],\
+            [0,0,1.0/3,0,0,1.0/3,0,0,0,0,0,0,0,1.0/3,0,0],\
+            [0,0,0,0,0,0.5,0,0,0,0,0.5,0,0,0,0,0],\
+            [0,0,0,0,1.0/3,0,1.0/3,0,0,0,0,1.0/3,0,0,0,0],\
+            [0,0,0,0,0,1.0/3,0,1.0/3,1.0/3,0,0,0,0,0,0,0],\
+            [0,0,0,0,0,0,0.5,0,0,0.5,0,0,0,0,0,0]  ])
+
+    def qn3(self):
+        es=0
+        T=16
+        count1=0.0
+        count2=0.0
+        for i in range(1000000):
+            randele = 0
+            randseq = [0 for k in range(T)]
+            for j in range(T):
+                randseq[j]=float(randele)
+                randele = np.random.choice(16, 1, p= self.transmat[randele])
+                randele = randele[0]
+                
+            #print randseq
+            ss = sum(randseq)
+            if(ss % 13 == 0 and ss % 5 ==0):
+                count1 = count1+1
+            if(ss % 13 == 0):
+                count2 = count2+1
+        if(count2!=0):
+            print count1/count2
+        else:
+            print "Undefined"
+
+    def qn1(self):
+        es=0
+        ss =[]
+        T=16
+        count1=0.0
+        count2=0.0
+        for i in range(2):
+            randele = 0
+            randseq = [0 for k in range(T)]
+            for j in range(T):
+                randseq[j]=float(randele)
+                randele = np.random.choice(16, 1, p= self.transmat[randele])
+                randele = randele[0]
+                
+            print randseq
+            present_sum =sum(randseq)
+            print 'present sum = {}'.format(present_sum)
+            present_summod = present_sum%13
+            print 'present sum mod 13 = {}'.format(present_summod)
+            ss.append( present_summod)
+            #es = ((1.*i)*es+(ss%13))/(float(i+1))
+            
+            
+            #print 'expected sum{}'.format(es)
+        print 'sum{}'.format(ss)
+        es = statistics.mean(ss)
+        estd = statistics.pstdev(ss)
+        print 'expectation of sum mod 13={}'.format(es)
+        print 'std dev of sum mod 13={}'.format(estd)
+
+if __name__=='__main__':
+    Inc = inc()
+    Inc.qn3()
+   # Inc.qn1()
